@@ -1,0 +1,26 @@
+# Material de trabajo local (ver recursos/README.md)
+recursos/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+build/
+
+# Variables de entorno / secretos
+.env
+.env.*
+!.env.example
+
+# Editores / SO
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
