@@ -1,5 +1,6 @@
 # Material de trabajo local (ver recursos/README.md)
 recursos/
+docs/
 
 # Python
 __pycache__/
