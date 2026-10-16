@@ -1,0 +1,441 @@
+........................................................................ [ 17%]
+.......................xxxx..x.........xx............................... [ 35%]
+........................................................................ [ 53%]
+........................................................................ [ 71%]
+........................................................................ [ 89%]
+..s...............xxx.....................                               [100%]
+=================================== PASSES ====================================
+____________ test_a_whatsapp_failure_does_not_undo_the_resolution _____________
+------------------------------ Captured log call ------------------------------
+WARNING  app.services.tickets:tickets.py:119 No se pudo avisar por WhatsApp la resolución del ticket T-1001
+Traceback (most recent call last):
+  File "C:\Users\ation\AppData\Local\Temp\claude\d--Duoc-Capstone-Grupo-2\1fef51cb-1dd2-4653-bc94-4e7c95bd7beb\scratchpad\wt-pruebas\proyecto\backend\app\services\tickets.py", line 116, in notify_resolved
+    await send_text(tenant.id, tenant.whatsapp_phone_number_id, convo.wa_from,
+  File "C:\Users\ation\AppData\Local\Temp\claude\d--Duoc-Capstone-Grupo-2\1fef51cb-1dd2-4653-bc94-4e7c95bd7beb\scratchpad\wt-pruebas\proyecto\backend\tests\test_aviso_ticket_resuelto.py", line 50, in _send_text
+    raise MetaApiError({"error": {"message": "Número no válido"}})
+app.services.whatsapp.MetaApiError: {'error': {'message': 'Número no válido'}}
+_______________________ test_health_503_si_la_bd_falla ________________________
+------------------------------ Captured log call ------------------------------
+WARNING  app.main:main.py:106 Health check: base de datos no disponible: ConnectionError('password=secreta host=db')
+________ test_damaged_file_is_flagged_without_stopping_the_next_upload ________
+------------------------------ Captured log call ------------------------------
+WARNING  pypdf._reader:_utils.py:463 EOF marker not found
+___ test_si_el_principal_se_queda_sin_cupo_responde_el_respaldo_sin_esperar ___
+------------------------------ Captured log call ------------------------------
+WARNING  app.services.llm:llm.py:230 El proveedor principal falló (LLM_RATE_LIMIT): se usa el de respaldo.
+_______ test_sin_saldo_clave_mala_o_caido_tambien_pasa_al_respaldo[402] _______
+------------------------------ Captured log call ------------------------------
+WARNING  app.services.llm:llm.py:230 El proveedor principal falló (LLM_NO_BALANCE): se usa el de respaldo.
+_______ test_sin_saldo_clave_mala_o_caido_tambien_pasa_al_respaldo[401] _______
+------------------------------ Captured log call ------------------------------
+WARNING  app.services.llm:llm.py:230 El proveedor principal falló (LLM_KEY_REJECTED): se usa el de respaldo.
+_______ test_sin_saldo_clave_mala_o_caido_tambien_pasa_al_respaldo[500] _______
+------------------------------ Captured log call ------------------------------
+WARNING  app.services.llm:llm.py:230 El proveedor principal falló (LLM_UNREACHABLE): se usa el de respaldo.
+_______________________ test_si_fallan_los_dos_se_avisa _______________________
+------------------------------ Captured log call ------------------------------
+WARNING  app.services.llm:llm.py:230 El proveedor principal falló (LLM_UNREACHABLE): se usa el de respaldo.
+=========================== short test summary info ===========================
+PASSED tests/test_auth.py::test_login_ok
+PASSED tests/test_auth.py::test_login_bad_credentials
+PASSED tests/test_auth.py::test_refresh_rotation_and_reuse
+PASSED tests/test_auth.py::test_logout_revokes_refresh_token
+PASSED tests/test_auth.py::test_logout_all_sessions
+PASSED tests/test_auth.py::test_role_forbidden
+PASSED tests/test_auth.py::test_missing_token
+PASSED tests/test_aviso_ticket_resuelto.py::test_agent_resolves_with_a_reply_and_the_open_chat_receives_both
+PASSED tests/test_aviso_ticket_resuelto.py::test_admin_resolves_without_reply_and_only_the_notice_is_left
+PASSED tests/test_aviso_ticket_resuelto.py::test_resolving_from_the_conversation_also_notifies_in_spanish
+PASSED tests/test_aviso_ticket_resuelto.py::test_a_reply_without_resolving_is_rejected
+PASSED tests/test_aviso_ticket_resuelto.py::test_the_user_sees_the_notice_when_coming_back_with_the_account
+PASSED tests/test_aviso_ticket_resuelto.py::test_whatsapp_user_receives_the_reply_and_notice_on_their_number
+PASSED tests/test_aviso_ticket_resuelto.py::test_a_whatsapp_failure_does_not_undo_the_resolution
+PASSED tests/test_banco_simulacion.py::test_banco_resuelve_todas_sus_etiquetas
+PASSED tests/test_base_conocimiento.py::test_documento_escrito_en_el_panel_se_indexa_y_se_edita
+PASSED tests/test_base_conocimiento.py::test_documento_escrito_rechaza_duplicados_y_vacios
+PASSED tests/test_base_conocimiento.py::test_editar_una_faq_no_puede_dejarla_duplicada
+PASSED tests/test_bot_agents.py::test_new_company_is_provisioned_with_both_bot_agents
+PASSED tests/test_bot_agents.py::test_disabling_the_commercial_agent_routes_its_queries_to_the_technical_one
+PASSED tests/test_bot_agents.py::test_the_technical_agent_cannot_be_disabled
+PASSED tests/test_bot_agents.py::test_bot_agent_configuration_persists_and_the_type_is_validated
+PASSED tests/test_chat_flow.py::test_public_config_and_session
+PASSED tests/test_chat_flow.py::test_escalation_to_live_and_agent_console
+PASSED tests/test_chat_flow.py::test_escalation_to_ticket_when_no_agent
+PASSED tests/test_chat_flow.py::test_company_dashboard_and_human_agents
+PASSED tests/test_chat_flow.py::test_tenant_isolation
+PASSED tests/test_chunking.py::test_chunks_end_on_sentence_boundaries_and_overlap
+PASSED tests/test_chunking.py::test_chunking_falls_back_when_there_is_no_sentence_boundary
+PASSED tests/test_chunking.py::test_every_chunk_is_labelled_with_company_chat_type_and_source
+PASSED tests/test_chunking.py::test_changing_the_chat_type_relabels_the_existing_chunks
+PASSED tests/test_chunking.py::test_reingesting_the_same_document_does_not_duplicate_chunks
+PASSED tests/test_clasificador_modelo.py::test_un_mensaje_claro_no_le_pregunta_al_modelo
+PASSED tests/test_clasificador_modelo.py::test_un_mensaje_ambiguo_lo_decide_el_modelo_con_los_temas
+PASSED tests/test_clasificador_modelo.py::test_si_el_modelo_falla_tarda_o_divaga_vuelve_a_las_reglas[falla0]
+PASSED tests/test_clasificador_modelo.py::test_si_el_modelo_falla_tarda_o_divaga_vuelve_a_las_reglas[lento]
+PASSED tests/test_clasificador_modelo.py::test_si_el_modelo_falla_tarda_o_divaga_vuelve_a_las_reglas[no s\xe9]
+PASSED tests/test_clasificador_modelo.py::test_el_comercial_apagado_no_consulta_nada
+PASSED tests/test_clasificador_modelo.py::test_el_evaluador_mide_sin_el_modelo
+PASSED tests/test_comprobacion.py::test_quita_la_linea_con_un_telefono_y_un_correo_inventados
+PASSED tests/test_comprobacion.py::test_un_dato_que_si_esta_pasa_aunque_venga_escrito_distinto
+PASSED tests/test_comprobacion.py::test_quita_cada_tipo_de_dato_inventado[No, Duoc no tiene Medicina.\nContacta a Admisi\xf3n en admisi\xf3n.duoc.cl.-admisi\xf3n.duoc.cl]
+PASSED tests/test_comprobacion.py::test_quita_cada_tipo_de_dato_inventado[No, Duoc no tiene Medicina.\nM\xe1s en https://www.duoc.cl/medicina/.-https://www.duoc.cl/medicina/]
+PASSED tests/test_comprobacion.py::test_quita_cada_tipo_de_dato_inventado[Planes de fibra:\n- Fibra 600: $24.990\n- Fibra 1000: $29.990-$29.990]
+PASSED tests/test_comprobacion.py::test_quita_cada_tipo_de_dato_inventado[Requisitos de la beca:\n- Hogar del 70 %\n- Un 90% de asistencia-90%]
+PASSED tests/test_comprobacion.py::test_fechas_codigos_y_horas_no_son_telefonos
+PASSED tests/test_comprobacion.py::test_si_no_queda_nada_util_lo_dice
+PASSED tests/test_comprobacion.py::test_un_dato_inventado_no_llega_aunque_el_verificador_no_haya_revisado
+PASSED tests/test_comprobacion.py::test_un_dato_de_la_documentacion_o_de_la_empresa_llega
+PASSED tests/test_comprobacion.py::test_si_solo_quedaba_el_dato_inventado_responde_que_no_tiene_la_informacion
+PASSED tests/test_comprobacion.py::test_lo_que_dijo_el_cliente_se_puede_repetir
+PASSED tests/test_crawler.py::test_no_pasa_de_la_profundidad_maxima
+PASSED tests/test_crawler.py::test_profundidad_cero_es_solo_la_url_registrada
+PASSED tests/test_crawler.py::test_no_pasa_del_maximo_de_paginas
+PASSED tests/test_crawler.py::test_las_rutas_excluidas_no_se_visitan
+PASSED tests/test_crawler.py::test_con_rutas_incluidas_solo_se_indexa_lo_que_esta_debajo
+PASSED tests/test_crawler.py::test_una_ruta_excluida_gana_a_una_incluida
+PASSED tests/test_crawler.py::test_solo_recorre_el_mismo_sitio
+PASSED tests/test_crawler.py::test_respeta_robots_txt
+PASSED tests/test_crawler.py::test_no_descarga_archivos
+PASSED tests/test_crawler.py::test_ignora_el_fragmento_y_los_parametros_utm
+PASSED tests/test_crawler.py::test_api_guarda_y_devuelve_las_reglas
+PASSED tests/test_crawler.py::test_api_rechaza_reglas_invalidas
+PASSED tests/test_crawler.py::test_el_escaneo_indexa_segun_las_reglas_de_la_empresa
+PASSED tests/test_crawler.py::test_modo_pagina_indexa_solo_la_url_registrada
+PASSED tests/test_crawler.py::test_modo_seccion_se_queda_bajo_la_ruta_registrada
+PASSED tests/test_crawler.py::test_modo_lista_indexa_exactamente_las_paginas_elegidas
+PASSED tests/test_crawler.py::test_modo_lista_respeta_robots_y_el_maximo
+PASSED tests/test_crawler.py::test_sitio_completo_suma_las_paginas_del_sitemap
+PASSED tests/test_crawler.py::test_sitio_completo_usa_el_sitemap_de_robots_y_los_indices
+PASSED tests/test_crawler.py::test_api_guarda_el_modo_y_la_lista
+PASSED tests/test_crawler.py::test_el_escaneo_en_modo_lista_indexa_las_paginas_elegidas
+PASSED tests/test_cuentas_usuario_final.py::test_registro_ingreso_y_perfil
+PASSED tests/test_cuentas_usuario_final.py::test_registro_rechaza_correo_repetido_clave_debil_y_chat_no_publicado
+PASSED tests/test_cuentas_usuario_final.py::test_el_mismo_correo_puede_tener_cuenta_en_dos_empresas
+PASSED tests/test_cuentas_usuario_final.py::test_ingreso_con_clave_mala_o_correo_inexistente_da_el_mismo_error
+PASSED tests/test_cuentas_usuario_final.py::test_demasiados_intentos_de_ingreso_se_frenan
+PASSED tests/test_cuentas_usuario_final.py::test_con_la_sesion_iniciada_las_conversaciones_quedan_en_el_historial
+PASSED tests/test_cuentas_usuario_final.py::test_sin_cuenta_o_con_otro_token_la_conversacion_queda_anonima
+PASSED tests/test_cuentas_usuario_final.py::test_nadie_ve_las_conversaciones_de_otra_cuenta
+PASSED tests/test_cuentas_usuario_final.py::test_la_cuenta_de_una_empresa_no_sirve_en_otra
+PASSED tests/test_cuentas_usuario_final.py::test_los_tokens_de_cuenta_y_de_sesion_no_se_intercambian
+PASSED tests/test_cuentas_usuario_final.py::test_al_ingresar_se_guarda_la_conversacion_que_estaba_abierta
+PASSED tests/test_cuentas_usuario_final.py::test_no_se_puede_guardar_una_conversacion_de_otra_empresa_ni_con_token_falso
+PASSED tests/test_cuentas_usuario_final.py::test_la_lista_va_por_paginas_y_muestra_estado_y_ticket
+PASSED tests/test_cuentas_usuario_final.py::test_una_conversacion_abierta_o_con_ticket_se_retoma_y_una_resuelta_no
+PASSED tests/test_cuentas_usuario_final.py::test_nadie_retoma_una_conversacion_ajena_ni_de_otra_empresa
+PASSED tests/test_cuentas_usuario_final.py::test_borrar_el_historial_lo_anonimiza_y_cierra_lo_abierto
+PASSED tests/test_derivacion_ejecutivos.py::test_live_escalation_reports_increasing_queue_position
+PASSED tests/test_derivacion_ejecutivos.py::test_queue_position_only_counts_conversations_of_the_same_type
+PASSED tests/test_derivacion_ejecutivos.py::test_disabled_or_other_type_agents_do_not_count_as_available
+PASSED tests/test_derivacion_ejecutivos.py::test_queued_conversation_becomes_ticket_when_last_agent_goes_offline
+PASSED tests/test_derivacion_ejecutivos.py::test_second_agent_claiming_is_told_who_got_there_first
+PASSED tests/test_derivacion_ejecutivos.py::test_simultaneous_claims_only_one_wins
+PASSED tests/test_derivacion_ejecutivos.py::test_simultaneous_claim_loser_is_told_the_winner_name
+PASSED tests/test_derivacion_ejecutivos.py::test_twenty_concurrent_escalations_and_three_agents_claiming
+PASSED tests/test_derivacion_ejecutivos.py::test_twenty_concurrent_escalations_without_agents_get_unique_tickets
+PASSED tests/test_ejecutivos_empresa.py::test_alta_guarda_tipo_y_canal_y_aparece_en_el_listado
+PASSED tests/test_ejecutivos_empresa.py::test_tipo_o_canal_fuera_de_la_lista_se_rechaza
+PASSED tests/test_ejecutivos_empresa.py::test_editar_cambia_el_tipo_de_derivacion
+PASSED tests/test_ejecutivos_empresa.py::test_email_repetido_se_rechaza_aunque_cambie_mayusculas
+PASSED tests/test_ejecutivos_empresa.py::test_eliminado_desaparece_del_listado_y_no_puede_entrar
+PASSED tests/test_ejecutivos_empresa.py::test_eliminado_no_se_puede_editar_ni_volver_a_eliminar
+PASSED tests/test_ejecutivos_empresa.py::test_ejecutivo_nuevo_queda_invitado_sin_acceso_y_sin_recibir_derivaciones
+PASSED tests/test_ejecutivos_empresa.py::test_activa_su_cuenta_con_la_invitacion_y_luego_entra
+PASSED tests/test_ejecutivos_empresa.py::test_invitacion_vencida_o_clave_debil_no_activan
+PASSED tests/test_ejecutivos_empresa.py::test_ejecutivo_eliminado_no_puede_activar_su_invitacion
+PASSED tests/test_ejecutivos_empresa.py::test_eliminar_reasigna_conversaciones_en_vivo_y_tickets_abiertos
+PASSED tests/test_ejecutivos_empresa.py::test_sin_reemplazo_las_conversaciones_vuelven_a_la_cola_y_los_tickets_quedan_libres
+PASSED tests/test_ejecutivos_empresa.py::test_sin_reemplazo_informa_las_conversaciones_devueltas_a_la_cola
+PASSED tests/test_ejecutivos_empresa.py::test_detalle_indica_a_quien_y_que_se_reasigno
+PASSED tests/test_ejecutivos_empresa.py::test_reasignacion_respeta_el_tipo_de_derivacion
+PASSED tests/test_ejecutivos_empresa.py::test_ultimo_de_su_tipo_advierte_y_solo_se_elimina_con_confirmacion
+PASSED tests/test_ejecutivos_empresa.py::test_si_queda_otro_del_mismo_tipo_no_pide_confirmacion
+PASSED tests/test_ejecutivos_empresa.py::test_advierte_si_el_unico_que_queda_del_tipo_solo_esta_invitado
+PASSED tests/test_ejecutivos_empresa.py::test_advierte_al_eliminar_el_unico_both_si_un_tipo_queda_sin_cobertura
+PASSED tests/test_ejecutivos_empresa.py::test_admin_solo_ve_los_ejecutivos_de_su_empresa
+PASSED tests/test_ejecutivos_empresa.py::test_admin_no_puede_editar_ni_eliminar_ejecutivos_de_otra_empresa
+PASSED tests/test_ejecutivos_empresa.py::test_alta_ignora_un_tenant_id_ajeno_enviado_en_el_body
+PASSED tests/test_ejecutivos_empresa.py::test_eliminar_nunca_reasigna_a_ejecutivos_de_otra_empresa
+PASSED tests/test_ejecutivos_empresa.py::test_un_ejecutivo_no_puede_administrar_ejecutivos
+PASSED tests/test_embeddings.py::test_the_hash_backend_is_deterministic_and_normalised
+PASSED tests/test_embeddings.py::test_the_azure_client_calls_the_configured_deployment_with_the_key
+PASSED tests/test_embeddings.py::test_the_azure_client_restores_the_order_of_the_response
+PASSED tests/test_embeddings.py::test_an_error_from_azure_is_not_swallowed
+PASSED tests/test_escaneo_tandas.py::test_avanza_por_tandas_guardando_en_que_va
+PASSED tests/test_escaneo_tandas.py::test_el_resultado_es_el_mismo_que_de_una_vez
+PASSED tests/test_escaneo_tandas.py::test_las_paginas_que_ya_no_estan_se_quitan_solo_al_terminar
+PASSED tests/test_escaneo_tandas.py::test_dos_tandas_del_mismo_escaneo_no_corren_a_la_vez
+PASSED tests/test_escaneo_tandas.py::test_por_la_api_empieza_sigue_y_se_puede_detener
+PASSED tests/test_health.py::test_health_ok_con_bd_disponible
+PASSED tests/test_health.py::test_health_503_si_la_bd_falla
+PASSED tests/test_ingestion.py::test_extracts_every_supported_format_in_reading_order[pdf]
+PASSED tests/test_ingestion.py::test_extracts_every_supported_format_in_reading_order[docx]
+PASSED tests/test_ingestion.py::test_extracts_every_supported_format_in_reading_order[txt]
+PASSED tests/test_ingestion.py::test_extracts_every_supported_format_in_reading_order[md]
+PASSED tests/test_ingestion.py::test_unsupported_format_is_rejected_naming_the_accepted_ones
+PASSED tests/test_ingestion.py::test_damaged_file_is_flagged_without_stopping_the_next_upload
+PASSED tests/test_ingestion.py::test_empty_file_is_flagged_with_a_reason
+PASSED tests/test_ingestion.py::test_ingestion_runs_in_the_background_when_workers_are_not_inline
+PASSED tests/test_ingestion.py::test_pdf_with_two_columns_is_read_column_by_column
+PASSED tests/test_ingestion.py::test_a_single_column_pdf_with_indentation_is_not_split_into_columns
+PASSED tests/test_ingestion.py::test_docx_tables_are_extracted_in_document_order
+PASSED tests/test_ingestion.py::test_txt_conserva_tildes_en_cualquier_codificacion[utf-8]
+PASSED tests/test_ingestion.py::test_txt_conserva_tildes_en_cualquier_codificacion[utf-8-sig]
+PASSED tests/test_ingestion.py::test_txt_conserva_tildes_en_cualquier_codificacion[cp1252]
+PASSED tests/test_ingestion.py::test_txt_conserva_tildes_en_cualquier_codificacion[latin-1]
+PASSED tests/test_ingestion.py::test_txt_conserva_tildes_en_cualquier_codificacion[utf-16]
+PASSED tests/test_ingestion.py::test_md_en_windows_1252_tambien_se_lee
+PASSED tests/test_intent.py::test_technical_words_do_not_match_commercial_substrings[No puedo subir la plantilla]
+PASSED tests/test_intent.py::test_technical_words_do_not_match_commercial_substrings[The explanation does not help]
+PASSED tests/test_intent.py::test_technical_words_do_not_match_commercial_substrings[Necesito reimplantar la configuraci\xf3n]
+PASSED tests/test_intent.py::test_technical_words_do_not_match_commercial_substrings[El trasplante no aparece en mi examen]
+PASSED tests/test_intent.py::test_technical_words_do_not_match_commercial_substrings[O planejamento da tarefa n\xe3o funciona]
+PASSED tests/test_intent.py::test_technical_words_do_not_match_commercial_substrings[No puedo recuperar mi contrase\xf1a]
+PASSED tests/test_intent.py::test_technical_words_do_not_match_commercial_substrings[Cannot upload the document]
+PASSED tests/test_intent.py::test_technical_words_do_not_match_commercial_substrings[N\xe3o consigo entrar no portal]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[\xbfCu\xe1nto cuesta la SUSCRIPCI\xd3N?]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[Necesito una cotizaci\xf3n]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[PRECIO?]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[\xbfCu\xe1l es el costo mensual?]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[Necesito revisar mi factura]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[I'd like a refund]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[Please send an invoice]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[What are your prices?]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[Preciso de um or\xe7amento]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[Quero ver os precos]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[Qual \xe9 o pre\xe7o?]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[Preciso consultar minha fatura]
+PASSED tests/test_intent.py::test_commercial_variants_across_languages[RENOVACIO\u0301N]
+PASSED tests/test_intent.py::test_a_failure_wins_over_a_commercial_word[No puedo cancelar mi hora m\xe9dica, la app se cae]
+PASSED tests/test_intent.py::test_a_failure_wins_over_a_commercial_word[La factura no se descarga, da error 500]
+PASSED tests/test_intent.py::test_a_failure_wins_over_a_commercial_word[Mi plan no funciona desde ayer]
+PASSED tests/test_intent.py::test_a_failure_wins_over_a_commercial_word[The invoice page doesn't load]
+PASSED tests/test_intent.py::test_a_failure_wins_over_a_commercial_word[Billing portal is broken]
+PASSED tests/test_intent.py::test_a_failure_wins_over_a_commercial_word[Erro ao gerar a fatura]
+PASSED tests/test_intent.py::test_a_failure_wins_over_a_commercial_word[A p\xe1gina de pre\xe7os n\xe3o carrega]
+PASSED tests/test_intent.py::test_words_close_to_a_failure_do_not_make_it_technical[\xbfC\xf3mo funciona el plan premium?]
+PASSED tests/test_intent.py::test_words_close_to_a_failure_do_not_make_it_technical[\xbfCu\xe1ndo cae el pago de la factura?]
+PASSED tests/test_intent.py::test_words_close_to_a_failure_do_not_make_it_technical[Quiero cancelar mi suscripci\xf3n]
+PASSED tests/test_intent.py::test_words_close_to_a_failure_do_not_make_it_technical[\xbfQu\xe9 incluye el plan Professional?]
+PASSED tests/test_intent.py::test_familias_comerciales_en_los_tres_idiomas[\xbfEl contrato tiene permanencia?]
+PASSED tests/test_intent.py::test_familias_comerciales_en_los_tres_idiomas[Where do I pay my bill?]
+PASSED tests/test_intent.py::test_familias_comerciales_en_los_tres_idiomas[Quanto custa o plano anual?]
+PASSED tests/test_intent.py::test_familias_comerciales_en_los_tres_idiomas[Tengo una pyme, \xbfqu\xe9 me ofrecen?]
+PASSED tests/test_intent.py::test_familias_comerciales_en_los_tres_idiomas[Do you have a free trial?]
+PASSED tests/test_intent.py::test_familias_comerciales_en_los_tres_idiomas[Tenho uma pequena empresa]
+PASSED tests/test_intent.py::test_familias_comerciales_en_los_tres_idiomas[\xbfCu\xe1nto cuestan los planes?]
+PASSED tests/test_intent.py::test_familias_comerciales_en_los_tres_idiomas[Can I downgrade my plan?]
+PASSED tests/test_intent.py::test_familias_comerciales_en_los_tres_idiomas[Quero falar com vendas]
+PASSED tests/test_intent.py::test_vocabulario_tecnico_es_seguro[Olvid\xe9 mi contrase\xf1a]
+PASSED tests/test_intent.py::test_vocabulario_tecnico_es_seguro[My printer is offline]
+PASSED tests/test_intent.py::test_vocabulario_tecnico_es_seguro[A VPN n\xe3o conecta]
+PASSED tests/test_intent.py::test_sin_senales_es_tecnico_pero_no_seguro[\xbfTrabajan con bancos?]
+PASSED tests/test_intent.py::test_sin_senales_es_tecnico_pero_no_seguro[Hola]
+PASSED tests/test_intent.py::test_sin_senales_es_tecnico_pero_no_seguro[Do you work with hospitals?]
+PASSED tests/test_intent.py::test_los_temas_de_la_empresa_deciden_un_mensaje_sin_senales
+PASSED tests/test_knowledge.py::test_document_upload_list_edit_delete
+PASSED tests/test_knowledge.py::test_faq_crud_and_export
+PASSED tests/test_knowledge.py::test_faq_import_csv
+PASSED tests/test_language.py::test_detecta_el_idioma_de_un_mensaje_claro[\xbfCu\xe1nto cuesta el plan para mi empresa?-es]
+PASSED tests/test_language.py::test_detecta_el_idioma_de_un_mensaje_claro[Necesito cambiar la contrase\xf1a del correo-es]
+PASSED tests/test_language.py::test_detecta_el_idioma_de_un_mensaje_claro[How much does the plan cost for my company?-en]
+PASSED tests/test_language.py::test_detecta_el_idioma_de_un_mensaje_claro[I can't log in to the portal-en]
+PASSED tests/test_language.py::test_detecta_el_idioma_de_un_mensaje_claro[Quanto custa o plano para a minha empresa?-pt]
+PASSED tests/test_language.py::test_detecta_el_idioma_de_un_mensaje_claro[N\xe3o consigo entrar no portal-pt]
+PASSED tests/test_language.py::test_detecta_el_idioma_de_un_mensaje_claro[Voc\xeas t\xeam atendimento em portugu\xeas?-pt]
+PASSED tests/test_language.py::test_un_mensaje_sin_idioma_claro_no_decide[ok]
+PASSED tests/test_language.py::test_un_mensaje_sin_idioma_claro_no_decide[gracias]
+PASSED tests/test_language.py::test_un_mensaje_sin_idioma_claro_no_decide[thanks]
+PASSED tests/test_language.py::test_un_mensaje_sin_idioma_claro_no_decide[obrigado]
+PASSED tests/test_language.py::test_un_mensaje_sin_idioma_claro_no_decide[123]
+PASSED tests/test_language.py::test_un_mensaje_sin_idioma_claro_no_decide[\U0001f44d]
+PASSED tests/test_language.py::test_un_mensaje_sin_idioma_claro_no_decide[s\xed]
+PASSED tests/test_language.py::test_un_mensaje_sin_idioma_claro_no_decide[]
+PASSED tests/test_language.py::test_responde_en_el_idioma_del_mensaje_aunque_la_conversacion_empezo_en_otro
+PASSED tests/test_language.py::test_un_mensaje_ambiguo_mantiene_el_idioma_de_la_conversacion
+PASSED tests/test_limite_proveedor.py::test_si_el_proveedor_pide_esperar_poco_se_reintenta
+PASSED tests/test_limite_proveedor.py::test_si_pide_esperar_mucho_avisa_con_su_codigo
+PASSED tests/test_limite_proveedor.py::test_al_limite_los_pasos_auxiliares_no_llaman_al_proveedor
+PASSED tests/test_limite_proveedor.py::test_si_el_principal_se_queda_sin_cupo_responde_el_respaldo_sin_esperar
+PASSED tests/test_limite_proveedor.py::test_sin_saldo_clave_mala_o_caido_tambien_pasa_al_respaldo[402]
+PASSED tests/test_limite_proveedor.py::test_sin_saldo_clave_mala_o_caido_tambien_pasa_al_respaldo[401]
+PASSED tests/test_limite_proveedor.py::test_sin_saldo_clave_mala_o_caido_tambien_pasa_al_respaldo[500]
+PASSED tests/test_limite_proveedor.py::test_si_fallan_los_dos_se_avisa
+PASSED tests/test_limite_proveedor.py::test_el_respaldo_es_solo_para_las_empresas_que_usan_el_proveedor_de_la_plataforma
+PASSED tests/test_memory.py::test_dentro_de_la_ventana_todo_viaja_literal
+PASSED tests/test_memory.py::test_el_turno_actual_no_se_manda_dos_veces
+PASSED tests/test_memory.py::test_al_desbordar_lo_viejo_se_resume_y_lo_nuevo_queda_literal
+PASSED tests/test_memory.py::test_nada_se_pierde_en_la_frontera_entre_resumen_y_ventana
+PASSED tests/test_memory.py::test_no_vuelve_a_resumir_lo_ya_resumido
+PASSED tests/test_memory.py::test_si_el_proveedor_falla_se_conserva_el_resumen_anterior
+PASSED tests/test_memory.py::test_sin_clave_no_hay_resumen_pero_si_ventana
+PASSED tests/test_memory.py::test_el_resumen_se_cobra_a_la_empresa
+PASSED tests/test_memory.py::test_el_resumen_no_se_cruza_entre_conversaciones
+PASSED tests/test_memory.py::test_un_aviso_del_sistema_no_es_el_resumen_ni_se_borra
+PASSED tests/test_mensajes_bot.py::test_cada_mensaje_esta_en_los_tres_idiomas_con_sus_variables
+PASSED tests/test_mensajes_bot.py::test_las_instrucciones_conservan_el_texto_de_antes
+PASSED tests/test_mensajes_bot.py::test_rellenar_no_ejecuta_nada_ni_falla_con_llaves_sueltas
+PASSED tests/test_mensajes_bot.py::test_vocabulario_desde_datos
+PASSED tests/test_mensajes_bot.py::test_la_empresa_cambia_un_mensaje_y_vuelve_al_por_defecto
+PASSED tests/test_mensajes_bot.py::test_se_rechazan_variables_desconocidas_textos_vacios_y_claves_no_editables
+PASSED tests/test_mensajes_bot.py::test_la_bienvenida_principal_es_la_de_configuracion
+PASSED tests/test_mensajes_bot.py::test_el_chat_usa_los_mensajes_de_la_empresa_y_no_los_de_otra
+PASSED tests/test_mensajes_bot.py::test_sin_cambios_los_avisos_salen_en_el_idioma_del_usuario
+PASSED tests/test_mensajes_bot.py::test_la_vista_previa_del_agente_responde
+PASSED tests/test_mensajes_bot.py::test_las_sugerencias_de_faq_se_generan
+PASSED tests/test_motor_evaluation.py::test_metrics_count_mistakes_and_partial_recall
+PASSED tests/test_motor_evaluation.py::test_case_needs_some_relevant_passage
+PASSED tests/test_motor_evaluation.py::test_evaluation_retrieves_indexed_chunk_and_rejects_wrong_labels
+PASSED tests/test_motor_evaluation.py::test_relevant_passage_by_source_and_phrase_survives_reindexing
+PASSED tests/test_motor_langgraph.py::test_el_grafo_tiene_los_siete_nodos_en_orden
+PASSED tests/test_motor_langgraph.py::test_la_respuesta_trae_la_duracion_de_cada_nodo
+PASSED tests/test_motor_langgraph.py::test_el_grafo_no_mezcla_empresas_en_peticiones_simultaneas
+PASSED tests/test_motor_langgraph.py::test_chat_proveedor_traduce_los_mensajes_y_cuenta_tokens
+PASSED tests/test_motor_langgraph.py::test_chat_proveedor_deja_pasar_el_error_del_proveedor
+PASSED tests/test_motor_langgraph.py::test_el_retriever_solo_ve_su_empresa_y_su_tipo
+PASSED tests/test_motor_langgraph.py::test_las_sugerencias_se_piden_en_paralelo_y_una_falla_no_tumba_la_otra
+PASSED tests/test_paginas_sitio.py::test_el_escaneo_guarda_cada_pagina_con_su_titulo_y_sus_fragmentos
+PASSED tests/test_paginas_sitio.py::test_el_re_escaneo_actualiza_borra_y_conserva_las_editadas
+PASSED tests/test_paginas_sitio.py::test_una_pagina_sin_cambios_no_se_reindexa
+PASSED tests/test_paginas_sitio.py::test_la_lista_trae_los_datos_sin_el_texto_y_pagina
+PASSED tests/test_paginas_sitio.py::test_editar_reindexa_y_descartar_vuelve_al_texto_del_sitio
+PASSED tests/test_paginas_sitio.py::test_no_acepta_un_texto_vacio
+PASSED tests/test_paginas_sitio.py::test_no_se_toca_una_pagina_con_un_escaneo_en_curso
+PASSED tests/test_paginas_sitio.py::test_quitar_una_pagina_la_excluye_del_proximo_escaneo
+PASSED tests/test_paginas_sitio.py::test_en_modo_lista_quitar_la_saca_de_las_paginas_elegidas
+PASSED tests/test_paginas_sitio.py::test_no_se_quita_la_pagina_de_inicio_del_escaneo
+PASSED tests/test_paginas_sitio.py::test_un_admin_no_ve_ni_toca_las_paginas_de_otra_empresa
+PASSED tests/test_paginas_sitio.py::test_solo_el_admin_de_empresa
+PASSED tests/test_paginas_sitio.py::test_rearmar_el_texto_desde_fragmentos_solapados
+PASSED tests/test_paginas_sitio.py::test_los_fragmentos_web_de_antes_se_vuelven_paginas
+PASSED tests/test_platform.py::test_create_tenant_and_duplicates
+PASSED tests/test_platform.py::test_tenant_detail_and_usage
+PASSED tests/test_platform.py::test_disable_and_activate_tenant
+PASSED tests/test_platform.py::test_dashboard
+PASSED tests/test_prompts_visibles.py::test_sin_instruccion_propia_se_ve_la_que_usa_el_bot
+PASSED tests/test_prompts_visibles.py::test_la_instruccion_propia_entra_en_la_cadena_y_la_por_defecto_no_se_copia
+PASSED tests/test_prompts_visibles.py::test_el_motor_usa_la_instruccion_por_defecto_de_su_tipo
+PASSED tests/test_prompts_visibles.py::test_plataforma_ve_y_edita_los_agentes_de_cada_empresa_por_separado
+PASSED tests/test_proveedor.py::test_una_empresa_sin_clave_propia_usa_la_de_la_plataforma
+PASSED tests/test_proveedor.py::test_la_clave_propia_de_la_empresa_manda_sobre_la_compartida
+PASSED tests/test_proveedor.py::test_sin_ninguna_clave_el_error_dice_que_hacer
+PASSED tests/test_proveedor.py::test_una_cuenta_sin_saldo_no_se_reporta_como_clave_invalida
+PASSED tests/test_proveedor.py::test_una_clave_invalida_si_se_reporta_como_tal
+PASSED tests/test_proveedor.py::test_un_modelo_retirado_nombra_el_modelo_en_el_error
+PASSED tests/test_proveedor.py::test_una_respuesta_buena_devuelve_texto_y_tokens
+PASSED tests/test_proveedor.py::test_sin_nada_guardado_se_usa_la_clave_del_entorno
+PASSED tests/test_proveedor.py::test_la_clave_guardada_manda_sobre_la_del_entorno
+PASSED tests/test_proveedor_empresa.py::test_sin_configurar_nada_hereda_todo_de_la_plataforma
+PASSED tests/test_proveedor_empresa.py::test_solo_el_modelo_propio_sigue_usando_la_clave_compartida
+PASSED tests/test_proveedor_empresa.py::test_proveedor_modelo_y_clave_propios_se_usan_todos
+PASSED tests/test_proveedor_empresa.py::test_la_clave_de_plataforma_no_se_manda_a_otro_proveedor
+PASSED tests/test_proveedor_empresa.py::test_la_misma_url_escrita_distinto_no_cuenta_como_otro_proveedor
+PASSED tests/test_proveedor_empresa.py::test_con_clave_propia_el_proveedor_propio_funciona_sin_plataforma
+PASSED tests/test_proveedor_empresa.py::test_la_configuracion_dice_que_usa_y_de_donde_sale_la_clave
+PASSED tests/test_proveedor_empresa.py::test_guardar_proveedor_propio_y_volver_a_heredar
+PASSED tests/test_proveedor_empresa.py::test_la_pantalla_avisa_cuando_la_clave_compartida_no_se_presta
+PASSED tests/test_proveedor_empresa.py::test_una_url_base_invalida_se_rechaza[http://api.proveedor.test/v1]
+PASSED tests/test_proveedor_empresa.py::test_una_url_base_invalida_se_rechaza[api.proveedor.test/v1]
+PASSED tests/test_proveedor_empresa.py::test_una_url_base_invalida_se_rechaza[https://]
+PASSED tests/test_proveedor_empresa.py::test_una_url_base_invalida_se_rechaza[https://api.proveedor.test/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]
+PASSED tests/test_proveedor_empresa.py::test_una_url_base_invalida_se_rechaza[https://api.proveedor .test/v1]
+PASSED tests/test_proveedor_empresa.py::test_un_modelo_invalido_se_rechaza[modelo con espacios]
+PASSED tests/test_proveedor_empresa.py::test_un_modelo_invalido_se_rechaza[mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm]
+PASSED tests/test_proveedor_empresa.py::test_cambiar_de_proveedor_deja_la_clave_sin_validar
+PASSED tests/test_proveedor_empresa.py::test_validar_usa_el_proveedor_y_modelo_efectivos
+PASSED tests/test_proveedor_empresa.py::test_claves_sin_prefijo_sk_se_aceptan
+PASSED tests/test_proveedor_empresa.py::test_otro_rol_no_puede_cambiar_el_proveedor
+PASSED tests/test_proveedor_empresa.py::test_alta_de_empresa_sin_clave_hereda_la_de_la_plataforma
+PASSED tests/test_proveedor_empresa.py::test_alta_de_empresa_acepta_claves_sin_sk
+PASSED tests/test_public_chat.py::test_primer_mensaje_responde_con_la_documentacion
+PASSED tests/test_public_chat.py::test_respuesta_no_mezcla_documentacion_de_otra_empresa
+PASSED tests/test_public_chat.py::test_recarga_recupera_historial_en_orden
+PASSED tests/test_public_chat.py::test_historial_con_after_devuelve_solo_lo_nuevo
+PASSED tests/test_public_chat.py::test_after_desconocido_devuelve_todo
+PASSED tests/test_public_chat.py::test_token_de_otra_sesion_no_lee_historial
+PASSED tests/test_public_chat.py::test_supera_limite_por_minuto_devuelve_429
+PASSED tests/test_public_chat.py::test_mensaje_rechazado_no_se_guarda
+PASSED tests/test_public_chat.py::test_tras_la_ventana_puede_volver_a_escribir
+PASSED tests/test_public_chat.py::test_limite_es_por_sesion
+PASSED tests/test_public_chat.py::test_proveedor_caido_responde_con_su_codigo_y_avisa_en_el_idioma[LLM_UNREACHABLE-502]
+PASSED tests/test_public_chat.py::test_proveedor_caido_responde_con_su_codigo_y_avisa_en_el_idioma[LLM_NO_BALANCE-402]
+PASSED tests/test_public_chat.py::test_proveedor_caido_responde_con_su_codigo_y_avisa_en_el_idioma[LLM_KEY_REJECTED-400]
+PASSED tests/test_rag_chain.py::test_scoped_retrieval_and_usage[No funciona-technical]
+PASSED tests/test_rag_chain.py::test_scoped_retrieval_and_usage[precio-commercial]
+PASSED tests/test_rag_chain.py::test_disabled_commercial_routes_to_technical
+PASSED tests/test_rag_chain.py::test_deepseek_failure_does_not_record_usage
+PASSED tests/test_rag_chain.py::test_rejects_conversation_from_other_tenant
+PASSED tests/test_rag_chain.py::test_empty_context_without_configured_agent
+PASSED tests/test_rag_chain.py::test_public_chat_success_uses_chain
+PASSED tests/test_reformular.py::test_sin_reformular_no_encuentra_y_reformulando_si
+PASSED tests/test_reformular.py::test_usa_la_conversacion_para_entender_el_mensaje
+PASSED tests/test_reformular.py::test_si_falla_se_busca_con_el_mensaje_tal_cual
+PASSED tests/test_reformular.py::test_lee_la_salida_aunque_venga_con_variaciones
+PASSED tests/test_relevancia.py::test_tildes_signos_y_palabras_vacias_no_cambian_el_embedding
+PASSED tests/test_relevancia.py::test_una_pregunta_ajena_ya_no_se_parece_a_cualquier_texto
+PASSED tests/test_relevancia.py::test_el_umbral_deja_lo_relevante_y_descarta_lo_ajeno
+PASSED tests/test_relevancia.py::test_el_umbral_se_puede_fijar_por_configuracion
+PASSED tests/test_relevancia.py::test_dos_preguntas_sin_respuesta_derivan_y_una_con_respuesta_no_cuenta
+PASSED tests/test_relevancia.py::test_seguir_escribiendo_despues_del_ticket_no_lo_vuelve_a_derivar
+PASSED tests/test_secrets.py::test_the_stored_key_is_not_readable_in_the_file
+PASSED tests/test_secrets.py::test_the_key_survives_a_new_store_instance
+PASSED tests/test_secrets.py::test_a_legacy_plaintext_store_is_read_and_rewritten_encrypted
+PASSED tests/test_secrets.py::test_an_unknown_name_returns_nothing
+PASSED tests/test_secrets.py::test_saving_the_key_through_the_api_leaves_it_unreadable_and_masked
+PASSED tests/test_secrets.py::test_an_invalid_format_is_rejected_without_touching_the_store
+PASSED tests/test_secrets.py::test_a_rejected_key_is_reported_and_leaves_the_company_consistent
+PASSED tests/test_secrets.py::test_an_unreachable_provider_does_not_mark_the_key_as_rejected
+PASSED tests/test_semantic_search.py::test_the_search_only_returns_passages_of_its_own_company
+PASSED tests/test_semantic_search.py::test_the_commercial_agent_sees_its_own_type_and_the_shared_one
+PASSED tests/test_semantic_search.py::test_web_content_is_excluded_when_the_agent_does_not_allow_it
+PASSED tests/test_semantic_search.py::test_building_a_search_without_a_company_fails_explicitly
+PASSED tests/test_semantic_search.py::test_indexing_or_deleting_without_a_company_also_fails
+PASSED tests/test_semantic_search.py::test_the_guard_does_not_get_in_the_way_of_normal_use
+PASSED tests/test_sobre_empresa.py::test_se_guarda_y_se_devuelve
+PASSED tests/test_sobre_empresa.py::test_va_en_las_instrucciones_de_los_dos_agentes
+PASSED tests/test_sobre_empresa.py::test_sin_descripcion_el_prompt_queda_como_antes
+PASSED tests/test_sobre_empresa.py::test_propuesta_desde_la_portada_sin_guardarla
+PASSED tests/test_sobre_empresa.py::test_sin_sitio_escaneado_no_hay_propuesta
+PASSED tests/test_tickets_escalation.py::test_with_available_agent_of_the_type_goes_live_without_ticket
+PASSED tests/test_tickets_escalation.py::test_without_available_agent_creates_ticket_with_number_type_and_priority
+PASSED tests/test_tickets_escalation.py::test_an_available_agent_of_another_type_does_not_count
+PASSED tests/test_tickets_escalation.py::test_a_busy_agent_is_not_available
+PASSED tests/test_tickets_escalation.py::test_ticket_numbers_are_correlative_within_a_company
+PASSED tests/test_tickets_escalation.py::test_ticket_numbering_is_independent_per_company
+PASSED tests/test_tickets_escalation.py::test_agent_opening_the_ticket_sees_full_transcript_and_reason
+PASSED tests/test_tickets_escalation.py::test_user_sees_the_ticket_number_in_the_chat_history
+PASSED tests/test_tickets_escalation.py::test_escalating_again_a_conversation_with_ticket_is_rejected
+PASSED tests/test_tickets_escalation.py::test_agent_changes_priority_and_a_resolved_ticket_rejects_changes
+PASSED tests/test_tickets_escalation.py::test_ticket_only_target_creates_ticket_even_with_available_agent
+PASSED tests/test_tickets_escalation.py::test_commercial_agent_cannot_open_a_technical_conversation
+PASSED tests/test_tickets_supervision.py::test_admin_lists_all_tickets_of_the_company_including_resolved
+PASSED tests/test_tickets_supervision.py::test_admin_filters_by_status_type_and_number
+PASSED tests/test_tickets_supervision.py::test_invalid_filters_are_rejected_with_their_code
+PASSED tests/test_tickets_supervision.py::test_detail_includes_the_conversation_transcript
+PASSED tests/test_tickets_supervision.py::test_only_the_company_admin_can_use_the_view
+PASSED tests/test_tickets_supervision.py::test_an_admin_never_sees_or_touches_tickets_of_another_company
+PASSED tests/test_tickets_supervision.py::test_cannot_assign_an_agent_of_another_company
+PASSED tests/test_tickets_supervision.py::test_admin_reassigns_only_to_an_active_agent_of_the_type
+PASSED tests/test_tickets_supervision.py::test_admin_resolves_saves_who_and_when_and_reopens
+PASSED tests/test_tickets_supervision.py::test_agent_sees_resolved_tickets_of_its_type_apart_from_the_queue
+PASSED tests/test_verificacion_reglas.py::test_una_respuesta_aprobada_llega_tal_cual
+PASSED tests/test_verificacion_reglas.py::test_una_pregunta_ajena_a_la_empresa_no_se_responde_ni_cuenta_como_fallo
+PASSED tests/test_verificacion_reglas.py::test_una_respuesta_sin_sustento_se_cambia_y_cuenta_como_fallo
+PASSED tests/test_verificacion_reglas.py::test_las_reglas_de_negocio_ajustan_la_respuesta_aprobada
+PASSED tests/test_verificacion_reglas.py::test_un_aviso_fijo_no_pasa_por_las_reglas
+PASSED tests/test_verificacion_reglas.py::test_si_la_revision_falla_o_tarda_sale_la_respuesta_generada
+PASSED tests/test_verificacion_reglas.py::test_apagada_la_verificacion_no_hay_llamadas_extra
+PASSED tests/test_verificacion_reglas.py::test_el_prompt_de_respuesta_limita_el_alcance_a_la_empresa
+PASSED tests/test_verificacion_reglas.py::test_las_reglas_se_guardan_en_configuracion
+SKIPPED [1] tests\test_semantic_search.py:155: El índice HNSW de los embeddings solo existe en PostgreSQL
+XFAIL tests/test_derivacion_ejecutivos.py::test_escalation_is_assigned_to_the_agent_with_least_active_conversations - SCRUM-36: escalate() no asigna ejecutivo ni mira la carga; _available_agent toma el primero (.first())
+XFAIL tests/test_derivacion_ejecutivos.py::test_ties_are_broken_the_same_way_every_time - SCRUM-36: no hay desempate estable entre ejecutivos con la misma carga
+XFAIL tests/test_derivacion_ejecutivos.py::test_agent_cannot_claim_beyond_the_simultaneous_limit - SCRUM-38: claim no limita cuántas conversaciones en vivo tiene un ejecutivo (el límite aún no está definido)
+XFAIL tests/test_derivacion_ejecutivos.py::test_agent_at_capacity_is_not_available_for_new_escalations - SCRUM-38: un ejecutivo en su límite sigue contando como disponible y la derivación no pasa a ticket
+XFAIL tests/test_derivacion_ejecutivos.py::test_twenty_escalations_are_spread_evenly_across_three_agents - SCRUM-40 depende de SCRUM-36/38: sin asignación por menor carga las derivaciones no se reparten entre los tres ejecutivos
+XFAIL tests/test_ejecutivos_empresa.py::test_alta_informa_que_se_envio_la_invitacion - SCRUM-139: el alta genera el token pero no envía ni informa la invitación (falta invitation_sent, como en el alta de empresa)
+XFAIL tests/test_ejecutivos_empresa.py::test_admin_puede_reenviar_una_invitacion_vencida - SCRUM-139: no hay forma de reenviar una invitación vencida aunque el error INVITE_EXPIRED lo indique (ruta propuesta: POST .../{agent_id}/invitation)
+XFAIL tests/test_tickets_escalation.py::test_ticket_includes_a_summary_of_the_problem - SCRUM-61: el ticket no tiene resumen del problema; la cola solo muestra Conversation.topic
+XFAIL tests/test_tickets_escalation.py::test_confirmation_tells_the_user_the_response_channel - SCRUM-112: la confirmación al usuario no indica por qué canal recibirá la respuesta
+XFAIL tests/test_tickets_escalation.py::test_ticket_priority_depends_on_the_case - SCRUM-59 criterio 1: la prioridad del ticket siempre queda en medium; nada la asigna según el caso
+391 passed, 1 skipped, 10 xfailed in 113.36s (0:01:53)
