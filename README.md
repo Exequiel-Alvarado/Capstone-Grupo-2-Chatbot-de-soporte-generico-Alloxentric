@@ -40,6 +40,8 @@ Capstone APT122 · Grupo 2 · Duoc UC · 2026
 - [El motor: LangGraph de 7 nodos](#el-motor-langgraph-de-7-nodos)
 - [Stack tecnológico](#stack-tecnológico)
 - [Pruébalo](#pruébalo)
+- [Correrlo en local](#correrlo-en-local)
+- [Usuarios creados y sus roles](#usuarios-creados-y-sus-roles)
 - [Alcance de la v1](#alcance-de-la-v1)
 - [Estructura de este repositorio](#estructura-de-este-repositorio)
 - [Equipo](#equipo)
@@ -238,9 +240,178 @@ El **chat público** de cada empresa no necesita cuenta. Algunas preguntas para 
 | **Directa** | [`/c/directa`](https://frontend-one-liart-11.vercel.app/c/directa) | «¿Cuánto cuesta el plan de fibra óptica?» · «Prefiero hablar con una persona» |
 | **Alloxentric** | [`/c/alloxentric`](https://frontend-one-liart-11.vercel.app/c/alloxentric) | «¿Qué servicios ofrecen?» |
 
-Los paneles de administración y la consola del ejecutivo requieren una cuenta de demostración.
-Las credenciales se entregan **a la comisión evaluadora y al equipo docente** a solicitud; no se publican
-en este repositorio porque el sistema está en producción.
+Los paneles de administración y la consola del ejecutivo requieren una cuenta: las cuentas de prueba y su
+contraseña están en [Usuarios creados y sus roles](#usuarios-creados-y-sus-roles).
+
+---
+
+## Correrlo en local
+
+El código fuente está en el repositorio de desarrollo del equipo
+([`Exequiel-Alvarado/Capstone-Grupo-2`](https://github.com/Exequiel-Alvarado/Capstone-Grupo-2), privado:
+se pide acceso al equipo). La aplicación vive en `proyecto/`: `proyecto/backend` (FastAPI) y
+`proyecto/frontend` (React + Vite).
+
+### Requisitos
+
+| Herramienta | Versión | Para qué |
+|---|---|---|
+| **Docker** + Docker Compose | reciente | Levanta PostgreSQL 16 con pgvector, Redis, la API y el worker |
+| **Node.js** | 20 | El frontend |
+| **Git** | — | Clonar el repositorio |
+| Python *(opcional)* | 3.12 | Solo si se corre el backend sin Docker o la simulación de empresas |
+
+No hace falta ninguna cuenta de pago. Para que **el bot responda** se necesita una clave de un proveedor
+compatible con OpenAI; la de [Groq](https://console.groq.com) es gratuita y no pide tarjeta.
+
+### 1. Backend (primera terminal)
+
+```bash
+git clone https://github.com/Exequiel-Alvarado/Capstone-Grupo-2.git
+cd Capstone-Grupo-2/proyecto/backend
+
+cp .env.example .env          # solo la primera vez
+# Edita .env y pega tu clave en LLM_PLATFORM_API_KEY para que el bot responda.
+
+docker compose up -d          # PostgreSQL + pgvector, Redis, API (aplica las migraciones) y worker
+docker compose exec api python scripts/seed_demo.py         # empresas y usuarios de prueba (idempotente)
+docker compose exec api python scripts/seed_wellq_faqs.py   # opcional: 12 FAQ para que WellQ tenga de qué hablar
+```
+
+Comprueba que la API está arriba:
+
+```bash
+curl http://localhost:8000/health
+# {"status":"ok","env":"dev","database":"ok"}
+```
+
+La documentación interactiva de la API queda en **http://localhost:8000/docs**.
+
+### 2. Frontend (segunda terminal)
+
+```bash
+cd Capstone-Grupo-2/proyecto/frontend
+npm install                   # solo la primera vez
+npm run dev
+```
+
+Abre **http://localhost:5173**. Vite redirige `/api` y `/ws` a la API en el puerto 8000, así que no hay que
+configurar nada más.
+
+| Qué | Dirección local |
+|---|---|
+| Portada y login único | http://localhost:5173 |
+| Chat público de la empresa de ejemplo (sin cuenta) | http://localhost:5173/c/wellq |
+| Admin de plataforma | http://localhost:5173/platform |
+| Admin de empresa | http://localhost:5173/company |
+| Consola del ejecutivo | http://localhost:5173/console |
+
+### Opcional: las empresas de la simulación
+
+Para tener las mismas empresas que en la demo (Alloxentric, Directa y Dani27001), con su conocimiento,
+conversaciones y tickets, se corre desde el equipo (no dentro del contenedor), con un entorno de Python 3.12:
+
+```bash
+cd proyecto/backend
+python -m venv .venv && source .venv/bin/activate   # en Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python -m scripts.seed_simulacion --sin-web   # --sin-web: no descarga los sitios reales
+python -m scripts.seed_simulacion --borrar    # deshace la simulación
+```
+
+### Sin Docker
+
+Con PostgreSQL (con la extensión `pgvector`) y Redis instalados a mano, y `DATABASE_URL` y `REDIS_URL`
+apuntando a ellos en `.env`:
+
+```bash
+cd proyecto/backend
+pip install -r requirements.txt
+alembic upgrade head
+python scripts/seed_demo.py
+uvicorn app.main:app --reload
+```
+
+Con `WORKERS_INLINE=true` (el valor por defecto) las tareas corren dentro de la API y no hace falta el
+worker. Con `false`, se levanta aparte con `arq app.workers.tasks.WorkerSettings`.
+
+### Pruebas automatizadas
+
+```bash
+cd proyecto/backend
+pip install -r requirements.txt pytest pytest-asyncio
+pytest                        # corren sobre SQLite; la CI las repite sobre PostgreSQL + pgvector
+```
+
+### Apagarlo
+
+```bash
+cd proyecto/backend
+docker compose down           # detiene los contenedores y conserva la base
+docker compose down -v        # además borra la base y los datos sembrados
+```
+
+> **Si el login da error de red:** la API no está arriba; revisa `curl http://localhost:8000/health` y
+> `docker compose logs api`. **Si el bot no responde:** falta la clave en `LLM_PLATFORM_API_KEY`, o se puede
+> pegar en **Ajustes de plataforma** entrando como admin de plataforma (esa se borra en cada `--build`).
+> **Búsqueda en local:** usa `EMBEDDINGS_BACKEND=hash`, que es léxica, no semántica: conviene preguntar con
+> palabras parecidas a las del contenido.
+
+---
+
+## Usuarios creados y sus roles
+
+El login es **único** para todos: la misma pantalla, y el rol decide a qué panel entra cada uno. Los
+ejecutivos entran **desconectados**; para recibir derivaciones en vivo deben marcarse como disponibles en su
+consola (si no, la derivación termina en ticket).
+
+En el código hay tres roles de usuario interno (`platform_admin`, `company_admin` y `human_agent`). Los
+ejecutivos además tienen un tipo, técnico, comercial o ambos, y solo reciben las derivaciones de su tipo. El
+**cliente final** es aparte: no tiene rol, pertenece a una sola empresa y se registra él mismo desde el chat
+(o lo usa sin cuenta).
+
+> 🔑 **Contraseña:** todas las cuentas sembradas por los scripts (`seed_demo.py` y `seed_simulacion.py`)
+> usan la misma contraseña de prueba: **`Password123!`**
+
+### Sembrados por `seed_demo.py` (entorno local)
+
+| Usuario | Contraseña | Empresa (`slug`) | Rol | Entra a |
+|---|---|---|---|---|
+| `root@alloxentric.com` | `Password123!` | — (toda la plataforma) | **Admin de plataforma** | `/platform` |
+| `max@wellq.co.uk` | `Password123!` | WellQ (`wellq`) | **Admin de empresa** | `/company` |
+| `sofia@wellq.co.uk` | `Password123!` | WellQ (`wellq`) | **Ejecutivo** · técnico y comercial | `/console` |
+| `tecnico@wellq.co.uk` | `Password123!` | WellQ (`wellq`) | **Ejecutivo** · técnico | `/console` |
+| `comercial@wellq.co.uk` | `Password123!` | WellQ (`wellq`) | **Ejecutivo** · comercial | `/console` |
+| `empresa@demo.cl` | `Password123!` | Empresa Demo (`empresa-demo`) | **Admin de empresa** | `/company` |
+| `tecnico@demo.cl` | `Password123!` | Empresa Demo (`empresa-demo`) | **Ejecutivo** · técnico | `/console` |
+| `comercial@demo.cl` | `Password123!` | Empresa Demo (`empresa-demo`) | **Ejecutivo** · comercial | `/console` |
+
+*Empresa Demo* no tiene conocimiento cargado a propósito: sirve para comprobar que los datos de una empresa no
+se cuelan en otra.
+
+### Sembrados por `seed_simulacion.py` (local opcional y producción)
+
+| Usuario | Contraseña | Empresa (`slug`) | Rol | Entra a |
+|---|---|---|---|---|
+| `admin@alloxentric.com` | `Password123!` | Alloxentric (`alloxentric`) | **Admin de empresa** | `/company` |
+| `tecnico@alloxentric.com` | `Password123!` | Alloxentric (`alloxentric`) | **Ejecutivo** · técnico | `/console` |
+| `comercial@alloxentric.com` | `Password123!` | Alloxentric (`alloxentric`) | **Ejecutivo** · comercial | `/console` |
+| `admin@directa.cl` | `Password123!` | Directa (`directa`) | **Admin de empresa** | `/company` |
+| `tecnico@directa.cl` | `Password123!` | Directa (`directa`) | **Ejecutivo** · técnico | `/console` |
+| `comercial@directa.cl` | `Password123!` | Directa (`directa`) | **Ejecutivo** · comercial | `/console` |
+| `admin@dani27001.cl` | `Password123!` | Dani27001 (`dani27001`) | **Admin de empresa** | `/company` |
+| `tecnico@dani27001.cl` | `Password123!` | Dani27001 (`dani27001`) | **Ejecutivo** · técnico | `/console` |
+
+Dani27001 tiene desactivado su agente comercial del bot, por eso no tiene ejecutivo comercial.
+
+### Solo en producción
+
+| Usuario | Empresa (`slug`) | Rol | Entra a |
+|---|---|---|---|
+| `duoc@demo.cl` | Duoc UC (`duoc`) | **Admin de empresa** | `/company` |
+
+Duoc UC se creó a mano en producción (no la crea ningún script) y tiene además sus propios ejecutivos
+técnico y comercial. Su contraseña no la define ningún script; la entrega el equipo.
 
 ---
 
