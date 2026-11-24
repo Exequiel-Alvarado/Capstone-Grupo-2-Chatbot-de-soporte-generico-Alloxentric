@@ -1,27 +1,48 @@
-# Material de trabajo local (ver recursos/README.md)
-recursos/
-docs/
+# Entorno y secretos
+.env
+.env.*
+!.env.example
 
 # Python
 __pycache__/
 *.py[cod]
 .venv/
 venv/
-env/
-*.egg-info/
+.pytest_cache/
+.ruff_cache/
 
-# Node
+# Node / Next.js
 node_modules/
-dist/
-build/
+.next/
+out/
+npm-debug.log*
 
-# Variables de entorno / secretos
-.env
-.env.*
-!.env.example
-
-# Editores / SO
-.vscode/
-.idea/
+# Sistema operativo y editores
+.DS_Store
 Thumbs.db
-desktop.ini
+.idea/
+.vscode/
+
+# Artefactos de ejecucion local (tests, storage)
+var/
+
+# Build del frontend
+dist/
+
+# Artefactos de los generadores de entregables
+clases/recursos/avances/fase-1/
+clases/recursos/avances/fase-2/salida/
+clases/recursos/avances/fase-2/descartados/
+
+# Evidencia de la revision en navegador de los diagramas
+*.visual-check.*
+
+#carpeta local
+local/
+
+# Bloqueos temporales de Office
+~$*
+# Vercel CLI: vínculo del proyecto y variables bajadas con `vercel env pull`
+.vercel
+.env*
+!.env.example
