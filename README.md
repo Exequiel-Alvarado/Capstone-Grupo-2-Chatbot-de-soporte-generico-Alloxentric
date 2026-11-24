@@ -371,39 +371,37 @@ ejecutivos además tienen un tipo, técnico, comercial o ambos, y solo reciben l
 **cliente final** es aparte: no tiene rol, pertenece a una sola empresa y se registra él mismo desde el chat
 (o lo usa sin cuenta).
 
-> 🔒 **Contraseñas:** todas las cuentas sembradas comparten una contraseña de prueba, definida en
-> `proyecto/backend/scripts/datos/demo.json` y en `proyecto/docs/entorno-de-prueba.md` del repositorio de
-> desarrollo. No se publica aquí porque este repositorio es público y varias de estas cuentas existen
-> también en producción.
+> 🔑 **Contraseña:** todas las cuentas sembradas por los scripts (`seed_demo.py` y `seed_simulacion.py`)
+> usan la misma contraseña de prueba: **`Password123!`**
 
 ### Sembrados por `seed_demo.py` (entorno local)
 
-| Usuario | Empresa (`slug`) | Rol | Entra a |
-|---|---|---|---|
-| `root@alloxentric.com` | — (toda la plataforma) | **Admin de plataforma** | `/platform` |
-| `max@wellq.co.uk` | WellQ (`wellq`) | **Admin de empresa** | `/company` |
-| `sofia@wellq.co.uk` | WellQ (`wellq`) | **Ejecutivo** · técnico y comercial | `/console` |
-| `tecnico@wellq.co.uk` | WellQ (`wellq`) | **Ejecutivo** · técnico | `/console` |
-| `comercial@wellq.co.uk` | WellQ (`wellq`) | **Ejecutivo** · comercial | `/console` |
-| `empresa@demo.cl` | Empresa Demo (`empresa-demo`) | **Admin de empresa** | `/company` |
-| `tecnico@demo.cl` | Empresa Demo (`empresa-demo`) | **Ejecutivo** · técnico | `/console` |
-| `comercial@demo.cl` | Empresa Demo (`empresa-demo`) | **Ejecutivo** · comercial | `/console` |
+| Usuario | Contraseña | Empresa (`slug`) | Rol | Entra a |
+|---|---|---|---|---|
+| `root@alloxentric.com` | `Password123!` | — (toda la plataforma) | **Admin de plataforma** | `/platform` |
+| `max@wellq.co.uk` | `Password123!` | WellQ (`wellq`) | **Admin de empresa** | `/company` |
+| `sofia@wellq.co.uk` | `Password123!` | WellQ (`wellq`) | **Ejecutivo** · técnico y comercial | `/console` |
+| `tecnico@wellq.co.uk` | `Password123!` | WellQ (`wellq`) | **Ejecutivo** · técnico | `/console` |
+| `comercial@wellq.co.uk` | `Password123!` | WellQ (`wellq`) | **Ejecutivo** · comercial | `/console` |
+| `empresa@demo.cl` | `Password123!` | Empresa Demo (`empresa-demo`) | **Admin de empresa** | `/company` |
+| `tecnico@demo.cl` | `Password123!` | Empresa Demo (`empresa-demo`) | **Ejecutivo** · técnico | `/console` |
+| `comercial@demo.cl` | `Password123!` | Empresa Demo (`empresa-demo`) | **Ejecutivo** · comercial | `/console` |
 
 *Empresa Demo* no tiene conocimiento cargado a propósito: sirve para comprobar que los datos de una empresa no
 se cuelan en otra.
 
 ### Sembrados por `seed_simulacion.py` (local opcional y producción)
 
-| Usuario | Empresa (`slug`) | Rol | Entra a |
-|---|---|---|---|
-| `admin@alloxentric.com` | Alloxentric (`alloxentric`) | **Admin de empresa** | `/company` |
-| `tecnico@alloxentric.com` | Alloxentric (`alloxentric`) | **Ejecutivo** · técnico | `/console` |
-| `comercial@alloxentric.com` | Alloxentric (`alloxentric`) | **Ejecutivo** · comercial | `/console` |
-| `admin@directa.cl` | Directa (`directa`) | **Admin de empresa** | `/company` |
-| `tecnico@directa.cl` | Directa (`directa`) | **Ejecutivo** · técnico | `/console` |
-| `comercial@directa.cl` | Directa (`directa`) | **Ejecutivo** · comercial | `/console` |
-| `admin@dani27001.cl` | Dani27001 (`dani27001`) | **Admin de empresa** | `/company` |
-| `tecnico@dani27001.cl` | Dani27001 (`dani27001`) | **Ejecutivo** · técnico | `/console` |
+| Usuario | Contraseña | Empresa (`slug`) | Rol | Entra a |
+|---|---|---|---|---|
+| `admin@alloxentric.com` | `Password123!` | Alloxentric (`alloxentric`) | **Admin de empresa** | `/company` |
+| `tecnico@alloxentric.com` | `Password123!` | Alloxentric (`alloxentric`) | **Ejecutivo** · técnico | `/console` |
+| `comercial@alloxentric.com` | `Password123!` | Alloxentric (`alloxentric`) | **Ejecutivo** · comercial | `/console` |
+| `admin@directa.cl` | `Password123!` | Directa (`directa`) | **Admin de empresa** | `/company` |
+| `tecnico@directa.cl` | `Password123!` | Directa (`directa`) | **Ejecutivo** · técnico | `/console` |
+| `comercial@directa.cl` | `Password123!` | Directa (`directa`) | **Ejecutivo** · comercial | `/console` |
+| `admin@dani27001.cl` | `Password123!` | Dani27001 (`dani27001`) | **Admin de empresa** | `/company` |
+| `tecnico@dani27001.cl` | `Password123!` | Dani27001 (`dani27001`) | **Ejecutivo** · técnico | `/console` |
 
 Dani27001 tiene desactivado su agente comercial del bot, por eso no tiene ejecutivo comercial.
 
@@ -414,7 +412,7 @@ Dani27001 tiene desactivado su agente comercial del bot, por eso no tiene ejecut
 | `duoc@demo.cl` | Duoc UC (`duoc`) | **Admin de empresa** | `/company` |
 
 Duoc UC se creó a mano en producción (no la crea ningún script) y tiene además sus propios ejecutivos
-técnico y comercial.
+técnico y comercial. Su contraseña no la define ningún script; la entrega el equipo.
 
 ---
 
