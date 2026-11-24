@@ -240,9 +240,8 @@ El **chat público** de cada empresa no necesita cuenta. Algunas preguntas para 
 | **Directa** | [`/c/directa`](https://frontend-one-liart-11.vercel.app/c/directa) | «¿Cuánto cuesta el plan de fibra óptica?» · «Prefiero hablar con una persona» |
 | **Alloxentric** | [`/c/alloxentric`](https://frontend-one-liart-11.vercel.app/c/alloxentric) | «¿Qué servicios ofrecen?» |
 
-Los paneles de administración y la consola del ejecutivo requieren una cuenta de demostración.
-Las credenciales se entregan **a la comisión evaluadora y al equipo docente** a solicitud; no se publican
-en este repositorio porque el sistema está en producción.
+Los paneles de administración y la consola del ejecutivo requieren una cuenta: las cuentas de prueba y su
+contraseña están en [Usuarios creados y sus roles](#usuarios-creados-y-sus-roles).
 
 ---
 
